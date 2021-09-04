@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="10">
-        <v-data-table :headers="headers" :items="items">
+        <v-data-table :headers="headers" :items="$store.state.users.items">
           <template #[`header.from`]="{}">
             <v-select
               v-model="prefecture"
@@ -70,11 +70,7 @@ export default {
         { text: '年齢', value: 'age' },
         { text: '削除', value: 'delete', sortable: false },
       ],
-      items: [
-        { id: 1, name: '高田', from: '愛知', age: 33 },
-        { id: 2, name: '横山', from: '愛知', age: 42 },
-        { id: 3, name: '愛知', from: '岐阜', age: 10 },
-      ],
+
       dialog: false,
       prefectures: [
         { text: '全選択', value: '' },
@@ -88,11 +84,24 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      const i = this.items.indexOf(item)
-      confirm('これを削除しますか？') && this.items.splice(i, 1)
+      const i = this.$store.state.users.items.indexOf(item)
+      // confirm('これを削除しますか？') && this.items.splice(i, 1)
+      this.$store.dispatch('users/deleteAction', i)
     },
     update() {
-      this.items.splice(this.user.id - 1, 1, this.user)
+      const that = this
+      let i = 0
+      this.$store.state.users.items.some((val) => {
+        if (val.id === that.user.id) {
+          console.log(i)
+          return true
+        } else {
+          i++
+        }
+        return true
+      })
+      console.log(i)
+      this.$store.dispatch('users/updateAction', { index: i, val: this.user })
       this.dialog = false
     },
     close() {
