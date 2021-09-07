@@ -11,14 +11,12 @@ export const mutations = {
     state.items.splice(i, 1)
   },
   updateMutation(state, obj) {
-    console.log(obj)
     state.items.splice(obj.index, 1, obj.val)
   },
 }
 
 export const actions = {
   deleteAction({ commit }, i) {
-    console.log(state)
     commit('deleteMutation', i)
   },
   updateAction({ commit }, obj) {

@@ -1,52 +1,33 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="10">
-        <v-data-table :headers="headers" :items="$store.state.users.items">
-          <template #[`header.from`]="{}">
-            <v-select
-              v-model="prefecture"
-              :items="prefectures"
-              label="県の選択"
-            ></v-select>
-          </template>
-          <template #top>
-            <v-dialog v-model="dialog" max-width="500px">
-              <v-card-title>
-                <span class="headline">ユーザー編集</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="6"
-                      ><div>ID</div>
-                      {{ user.id }}
-                    </v-col>
-                    <v-col cols="6">
-                      <v-text-field v-model="user.name" label="名前" />
-                    </v-col>
-                    <v-col cols="6">
-                      <v-text-field v-model="user.age" label="年齢" />
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn @click="close">閉じる</v-btn>
-                <v-btn class="primary" @click="update">更新する</v-btn>
-                <v-spacer />
-              </v-card-actions>
-            </v-dialog>
-          </template>
-          <template #[`item.delete`]="{ item }">
-            <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
-            <v-icon @click="edit(item)">mdi-pencil</v-icon>
-          </template>
-        </v-data-table>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-app>
+    <v-container>
+      <v-row>
+        <v-col cols="10">
+          <v-data-table :headers="headers" :items="$store.state.users.items">
+            <template #[`header.from`]="{}">
+              <v-select
+                v-model="prefecture"
+                :items="prefectures"
+                label="県の選択"
+              ></v-select>
+            </template>
+            <template #top>
+              <v-dialog v-model="dialog" max-width="500px">
+                <modal-user
+                  :users-index="index"
+                  @is-dialog="dialog = $event"
+                ></modal-user>
+              </v-dialog>
+            </template>
+            <template #[`item.delete`]="{ item }">
+              <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
+              <v-icon @click="edit(item)">mdi-pencil</v-icon>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -80,6 +61,7 @@ export default {
       ],
       prefecture: '',
       user: {},
+      index: 0,
     }
   },
   methods: {
@@ -88,28 +70,8 @@ export default {
       // confirm('これを削除しますか？') && this.items.splice(i, 1)
       this.$store.dispatch('users/deleteAction', i)
     },
-    update() {
-      const that = this
-      let i = 0
-      this.$store.state.users.items.some((val) => {
-        if (val.id === that.user.id) {
-          console.log(i)
-          return true
-        } else {
-          i++
-        }
-        return true
-      })
-      console.log(i)
-      this.$store.dispatch('users/updateAction', { index: i, val: this.user })
-      this.dialog = false
-    },
-    close() {
-      this.dialog = false
-      this.user = {}
-    },
-    edit(user) {
-      this.user = Object.assign({}, user)
+    edit(u) {
+      this.index = this.$store.state.users.items.indexOf(u)
       this.dialog = true
     },
   },
