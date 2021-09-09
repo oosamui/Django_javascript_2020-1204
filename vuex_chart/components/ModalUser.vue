@@ -72,9 +72,6 @@ export default {
       this.userAgeInput = Number(this.userAgeInput)
       this.userAgeInput =
         this.userAgeInput !== -1 ? this.userAgeInput : this.userAge
-      console.log(this.userNameInput)
-      console.log(this.userAgeInput)
-      console.log(this.userAge)
       this.$store.dispatch('users/updateAction', {
         index: this.usersIndex,
         val: {
