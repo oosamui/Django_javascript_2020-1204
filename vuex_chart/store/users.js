@@ -13,6 +13,9 @@ export const mutations = {
   updateMutation(state, obj) {
     state.items.splice(obj.index, 1, obj.val)
   },
+  createMutation(state, obj) {
+    state.items.push(obj)
+  },
 }
 
 export const actions = {
@@ -21,5 +24,8 @@ export const actions = {
   },
   updateAction({ commit }, obj) {
     commit('updateMutation', obj)
+  },
+  createAction({ commit }, obj) {
+    commit('createMutation', obj)
   },
 }

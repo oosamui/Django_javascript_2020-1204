@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div style="background: white; color: #222222"
+  >
     <v-card-title>
       <span class="headline">ユーザー編集</span>
     </v-card-title>
@@ -8,18 +9,18 @@
         <v-row>
           <v-col cols="6"
             ><div>ID</div>
-            {{ userId }}
+            {{ usersInfo.u.id }}
           </v-col>
           <v-col cols="6">
             <v-text-field
-              :value="userName"
+              :value="usersInfo.u.name"
               label="名前"
               @input="userNameInput = $event"
             />
           </v-col>
           <v-col cols="6">
             <v-text-field
-              :value="userAge"
+              :value="usersInfo.u.age"
               label="年齢"
               @input="userAgeInput = $event"
             />
@@ -39,7 +40,7 @@
 <script>
 export default {
   props: {
-    usersIndex: { type: Number, default: 0 },
+    usersInfo: { type: Object },
   },
 
   data() {
@@ -48,37 +49,21 @@ export default {
       userAgeInput: -1,
     }
   },
-  computed: {
-    userAge() {
-      const age = this.$store.state.users.items[this.usersIndex].age
-      return age
-    },
-    userName() {
-      const name = this.$store.state.users.items[this.usersIndex].name
-      return name
-    },
-    userId() {
-      return this.$store.state.users.items[this.usersIndex].id
-    },
-    userFrom() {
-      return this.$store.state.users.items[this.usersIndex].from
-    },
-  },
+
   methods: {
     update() {
-      // const that = this
       this.userNameInput =
-        this.userNameInput !== '' ? this.userNameInput : this.userName
+        this.userNameInput !== '' ? this.userNameInput : this.usersInfo.u.name
       this.userAgeInput = Number(this.userAgeInput)
       this.userAgeInput =
-        this.userAgeInput !== -1 ? this.userAgeInput : this.userAge
+        this.userAgeInput !== -1 ? this.userAgeInput : this.usersInfo.u.age
       this.$store.dispatch('users/updateAction', {
-        index: this.usersIndex,
+        index: this.usersInfo.i,
         val: {
-          id: this.userId,
+          id: this.usersInfo.u.id,
           name: this.userNameInput,
           age: this.userAgeInput,
-          from: this.userFrom,
+          from: this.usersInfo.u.from,
         },
       })
       this.userAgeInput = -1
@@ -86,6 +71,8 @@ export default {
       this.$emit('is-dialog', false)
     },
     close() {
+      this.userAgeInput = -1
+      this.userNameInput = ''
       this.$emit('is-dialog', false)
       // this.dialog = false
       // this.user = {}
