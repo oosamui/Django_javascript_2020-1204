@@ -5,7 +5,7 @@
         <v-btn rounded color="indigo" @click="newUser()">new</v-btn>
       </v-row>
       <v-row>
-        <v-col cols="10">
+        <v-col cols="4">
           <v-data-table :headers="headers" :items="$store.state.users.items">
             <template #[`header.from`]="{}">
               <v-select
@@ -34,15 +34,29 @@
             </template>
           </v-data-table>
         </v-col>
-      </v-row>
-      <v-row>
-        <date-input />
+        <v-col cols="3">
+          <v-text-field
+            v-model="birthday"
+            label="生年月日"
+            @click="dialogBirthday = true"
+          ></v-text-field>
+
+          {{ endOfMonth }}
+          <v-dialog
+            v-model="dialogBirthday"
+            max-width="500px"
+            overlay-opacity="0.9"
+          >
+            <date-input pdpd="3" @birthday="birth"></date-input>
+          </v-dialog>
+        </v-col>
       </v-row>
     </v-container>
   </v-app>
 </template>
 
 <script>
+import moment from 'moment'
 import dateInput from '../components/dateInput.vue'
 export default {
   components: { dateInput },
@@ -67,6 +81,7 @@ export default {
       ],
 
       dialog: false,
+      dialogBirthday: false,
       prefectures: [
         { text: '全選択', value: '' },
         { text: '愛知', value: '愛知' },
@@ -76,9 +91,14 @@ export default {
       prefecture: '',
       user: {},
       index: 0,
+      birthday: '',
     }
   },
-  computed: {},
+  computed: {
+    endOfMonth() {
+      return moment(this.birthday).endOf('month').format('YYYY/MM/DD')
+    },
+  },
   methods: {
     deleteItem(item) {
       const i = this.$store.state.users.items.indexOf(item)
@@ -103,6 +123,9 @@ export default {
       this.$store.dispatch('users/createAction', this.user)
 
       this.dialog = true
+    },
+    birth(day) {
+      this.birthday = day
     },
   },
 }

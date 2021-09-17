@@ -14,7 +14,10 @@
           overlay-opacity="0.9"
           @click="dialogYearSelect = true"
         >
-          <year-select @yearSelectToParent="yearSelect"></year-select>
+          <year-select
+            :purpose-date-select="pdpd"
+            @yearSelectToParent="yearSelected"
+          ></year-select>
         </v-dialog>
       </div>
       <v-toolbar-title @click="dialogYearSelect = true">{{
@@ -51,6 +54,9 @@
 import moment from 'moment'
 
 export default {
+  props: {
+    pdpd: { type: String },
+  },
   data: () => ({
     events: [],
     value: moment().format('yyyy-MM-DD'),
@@ -72,7 +78,7 @@ export default {
       alert(`clicked ${event.name}`)
     },
     viewDay({ date }) {
-      alert(`date: ${date}`)
+      this.$emit('birthday', date)
     },
     getEvents() {
       const events = [
@@ -133,7 +139,7 @@ export default {
     getEventColor(event) {
       return event.color
     },
-    yearSelect(year) {
+    yearSelected(year) {
       this.dialogYearSelect = false //  モーダルを閉じる
       year = year.slice(0, year.length - 1) // 「年」を削除
       const d = moment(this.value).year(Number(year)) // 選択した年をSet
