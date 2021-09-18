@@ -1,6 +1,5 @@
 <template>
-  <div style="background: white; color: #222222"
-  >
+  <div style="background: white; color: #222222">
     <v-card-title>
       <span class="headline">ユーザー編集</span>
     </v-card-title>

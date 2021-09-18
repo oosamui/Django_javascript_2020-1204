@@ -40,8 +40,11 @@
             label="生年月日"
             @click="dialogBirthday = true"
           ></v-text-field>
+          <div>
+            上記の月末
+            {{ endOfMonth }}
+          </div>
 
-          {{ endOfMonth }}
           <v-dialog
             v-model="dialogBirthday"
             max-width="500px"
