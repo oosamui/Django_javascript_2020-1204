@@ -1,0 +1,28 @@
+html {
+}
+h1 {
+	text-align: center;
+}
+.animal {
+	height: 100vh;
+	border-bottom: 1px solid black;
+}
+.breed {
+	display: block;
+}
+.dog,
+.cat,
+.bird {
+	display: inline-block;
+}
+img {
+	display: block;
+	height: 30vh;
+}
+.br {
+	display: block;
+	text-align: center;
+	height: 15vh;
+	max-width: 30vw;
+	overflow: hidden;
+}

@@ -270,7 +270,17 @@ a:active {
 }
 .ranking .ranking-item {
 	margin-top: 15px;
+	/* 下のposition relativeは「ranking-order」を相対位置で指定するため親要素をrelativeにしている
+	https://uxmilk.jp/63409
+	CSSのposition: absoluteとrelativeとは 
+	*/
+	position: relative;
 }
+/*
+.ranking .ranking-item {
+	margin-top: 15px;
+}
+*/
 .ranking .ranking-item a {
 	display: block;
 	font-size: 0;
@@ -282,7 +292,14 @@ a:active {
 .ranking .image {
 	width: 55px;
 	height: 55px;
+	margin-right: 20;
 }
+/*
+.ranking .image {
+	width: 55px;
+	height: 55px;
+}
+*/
 .ranking .text {
 	display: inline-block;
 	width: 182px;
@@ -290,7 +307,10 @@ a:active {
 	vertical-align: top;
 	font-size: 1.2rem;
 	line-height: 1.5;
+	/*追加*/
+	margin-left: 15px;
 }
+/*
 .ranking .order {
 	display: inline-block;
 	width: 18px;
@@ -304,6 +324,22 @@ a:active {
 	line-height: 16px;
 	transform: rotate(45deg);
 }
+*/
+.ranking .order {
+	position: absolute;
+	top: -9px;
+	left: -9px;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+	background-color: #fff;
+	color: #aaa;
+	text-align: center;
+	font-weight: bold;
+	line-height: 16px;
+}
+
 .ranking .ranking-item:nth-of-type(1) .order,
 .ranking .ranking-item:nth-of-type(2) .order,
 .ranking .ranking-item:nth-of-type(3) .order {
@@ -321,12 +357,18 @@ a:active {
 .ranking .ranking-item:nth-of-type(3) .order {
 	background-color: #a0541a;
 }
+/*
 .ranking .order::before {
 	content: counter(ranking);
 	counter-increment: ranking;
 	display: inline-block;
 	font-size: 1rem;
-	transform: rotate(-45deg);
+}
+*/
+.ranking .order::before {
+	content: counter(ranking);
+	counter-increment: ranking;
+	font-size: 1rem;
 }
 /* p82 */
 .documents {
@@ -389,6 +431,37 @@ a:active {
  * -------------------------------- */
 .footer {
 	width: 100%;
+	padding: 20px 0 30px;
+	background: #2d3d54 url("../images/bg-footer.gif");
+	color: #fff;
+}
+.horizontal-list {
+	width: 970px;
+	margin: 0 auto;
+	text-align: right;
+	font-size: 0;
+}
+.horizontal-list .horizontal-item {
+	display: inline-block;
+	padding: 0 15px;
+	letter-spacing: 1px;
+}
+.horizontal-list .horizontal-item + .horizontal-item {
+	border-left: 1px solid #bbb;
+}
+.horizontal-list .horizontal-item a {
+	border-bottom: 1px dashed #777;
+	color: #bbb;
+	font-size: 1.1rem;
+	transition: color 0.15s;
+}
+.horizontal-list .horizontal-item a:hover {
+	color: #ddd;
+}
+.copyright {
+	margin-top: 30px;
+	text-align: center;
+	letter-spacing: 1px;
 }
 
 /* --------------------------------
