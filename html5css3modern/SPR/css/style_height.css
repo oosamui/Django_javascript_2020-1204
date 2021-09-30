@@ -1,5 +1,3 @@
-html {
-}
 h1 {
 	text-align: center;
 }
@@ -7,22 +5,33 @@ h1 {
 	height: 100vh;
 	border-bottom: 1px solid black;
 }
-.breed {
-	display: block;
+
+figure.dog,
+figure.cat,
+figure.bird {
+	/* display: inline-block; */
+	overflow: hidden; /* 画像外の部分のコンテンツを非表示にする */
+	display: table;
+
+	outline: 1px solid #ccc;
+	float: left;
 }
-.dog,
-.cat,
-.bird {
-	display: inline-block;
+figcaption {
+	display: table-caption;
+	caption-side: bottom;
+	height: 20vh;
+	margin: 10px;
+	overflow-wrap: anywhere;
+	overflow: hidden; /* 画像外の部分のコンテンツを非表示にする */
 }
 img {
-	display: block;
 	height: 30vh;
 }
+/* 
 .br {
-	display: block;
 	text-align: center;
 	height: 15vh;
-	max-width: 30vw;
 	overflow: hidden;
+	max-width: 100%;
 }
+*/

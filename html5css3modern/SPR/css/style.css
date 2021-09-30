@@ -173,6 +173,11 @@ body {
 	font-size: 1.2rem;
 	line-height: 2;
 }
+figcaption {
+	display: table-caption;
+	overflow-wrap: anywhere;
+	padding: 20px;
+}
 .work-text .button {
 	width: 60%;
 	margin-top: 20px;
@@ -260,3 +265,7 @@ body {
 }
 
 /* Footer */
+.footer {
+	padding: 12px 0;
+	font-size: 1.3rem;
+}
