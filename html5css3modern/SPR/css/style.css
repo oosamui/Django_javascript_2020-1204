@@ -269,3 +269,97 @@ figcaption {
 	padding: 12px 0;
 	font-size: 1.3rem;
 }
+
+/* --------------------------------
+ * smart phone
+ * -------------------------------- */
+@media (max-width: 1024px) {
+	body {
+		background-image: none;
+	}
+}
+@media (max-width: 768px) {
+	/* header */
+	/* header */
+	.site-title-sub::before,
+	.site-title-sub::after {
+		display: block;
+		width: 80%;
+		margin: 10px auto;
+	}
+	.site-title-sub {
+		font-size: 1.7rem;
+	}
+	.site-title {
+		margin-top: 35px;
+		font-size: 5rem;
+	}
+	.header {
+		padding-top: 60px;
+	}
+	.button:hover {
+		opacity: 1;
+	}
+	/* section1 about me */
+	.heading {
+		font-size: 2.5rem;
+	}
+	body {
+		font-size: 1.3rem;
+	}
+	.about-text {
+		line-height: 1.8;
+	}
+
+	/* works 作品 */
+	/* works 作品 */
+	.works-wrapper,
+	.work-box {
+		display: block;
+	}
+
+	.work-box:nth-child(odd) .work-image {
+		margin: 10px 
+		0 0 0;
+	}
+	.work-box:nth-child(even) .work-image {
+		margin: 10px 0 0 0;
+	}
+	.work-description {
+		display: none;
+	}
+
+	.work-box::after {
+		top: 0;
+		height: 100%;
+		background-size: cover;
+		transform: none;
+	}
+	/* section3 MY SKILL */
+	/* section3 MY SKILL */
+	.skills-wrapper,
+	.skill-box {
+		display: block;
+	}
+	.skill-icon {
+		width: 100px;
+		height: 100px;
+		font-size: 5rem;
+		line-height: 92px;
+	}
+	.skill-box {
+		margin: 40px;
+	}
+	.skill-text {
+		margin: 0;
+		text-align: left;
+	}
+	/* section4 CONTACT */
+	/* section4 CONTACT */
+	.contact-form {
+		width: 80%;
+	}
+	.contact {
+		padding-bottom: 80px;
+	}
+}
