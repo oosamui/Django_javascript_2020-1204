@@ -1,13 +1,11 @@
 <template>
   <div>
     <input type="file" @change="dcard_analysis" />
-    <div>{{ spendingconveniMonthly }}</div>
     <div>収入{{ income }}</div>
     <div>支出{{ spending }}</div>
-    <div>コンビニ{{ spendingConveni }}</div>
     <div>店 {{ shopObject }}</div>
     <div>その他 {{ others }}</div>
-    <div>全お金動き {{ vAll }}</div>
+    <div>その他 {{ $store.state.monthly.spendingIncomeShop }}</div>
   </div>
 </template>
 
@@ -15,6 +13,11 @@
 export default {
   data() {
     return {
+      ar: [
+        ['09-01', '09-02', '09-03'],
+        ['10-10', '10-11', '10-12'],
+        ['11-123', '11-234', '11-333'],
+      ],
       shopObject: {},
       income: 0,
       spending: 0,
@@ -717,7 +720,7 @@ export default {
       this.others = []
       this.income = 0
       this.spending = 0
-      this.vAll = [] // 支出入の全データ
+      const vAll1 = [] // 支出入の全データ
       // csvから取り出し
       const vm = this
       const file = e.target.files[0]
@@ -743,7 +746,7 @@ export default {
             // vNow:今読み込んでいる支出入データ
             return shop1.slice(1).slice(0, -1)
           })
-          this.vAll.push(vNow)
+          vAll1.push(vNow)
           // this.spendingIncome.forEach((val) => {
           total += parseInt(vNow[4])
           // 入金の場合、収入に合計
@@ -771,22 +774,25 @@ export default {
                 }
               })
             }
-            console.log(flagOthers)
             if (flagOthers === true) {
               this.shopObject['その他'] += parseInt(vNow[4]) // その他の金額合計
               this.others.push({ shop: vNow[2], price: vNow[4] })
             }
           }
         }
-        // this.shopObject['コンビニ'] = this.spendingConveni
-        // this.shopObject['入金'] = this.income
+        console.log(vAll1)
+        this.$store.dispatch('monthly/addMonthlyActions', {
+          date: vAll1[1][1],
+          val: this.shopObject,
+        })
       }
-      this.$store.dispatch('monthly/addMonthlyActions', {
-        date: '2021-09',
-        val: this.shopObject,
-      })
+      // const month = this.vAll1[1][1]
+      // console.log(month)
+
+      // this.$store.dispatch('monthly/addMonthlyActions', this.shopObject)
       return total
     },
   },
 }
 </script>
+""
