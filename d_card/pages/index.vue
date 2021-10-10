@@ -714,6 +714,12 @@ export default {
     },
   },
   methods: {
+    vuex_save(monthNow) {
+      this.$store.dispatch('monthly/addMonthlyActions', {
+        date: monthNow,
+        val: this.shopObject,
+      })
+    },
     dcard_analysis(e) {
       this.shops.map((s) => (this.shopObject[s] = 0))
       let total = 0
@@ -780,16 +786,20 @@ export default {
             }
           }
         }
-        console.log(vAll1)
-        this.$store.dispatch('monthly/addMonthlyActions', {
-          date: vAll1[1][1],
-          val: this.shopObject,
-        })
-      }
-      // const month = this.vAll1[1][1]
-      // console.log(month)
+        // vuexに保存
 
-      // this.$store.dispatch('monthly/addMonthlyActions', this.shopObject)
+        const AlreadyMonthObject = this.$store.state.monthly.spendingIncomeShop
+        const AlreadyMonthKeys = Object.keys(AlreadyMonthObject)
+        const monthNow = vAll1[1][1].substr(0, 7)
+        // 過去に同じ年月で登録してる「かつ」上書き保存に同意
+        if (AlreadyMonthKeys.includes(monthNow)) {
+          if (confirm('既に同じ年月で保存されていますが、上書きしますか？')) {
+            this.vuex_save(monthNow)
+          }
+        } else {
+          this.vuex_save(monthNow) // 同じ年月の登録は「ない」
+        }
+      }
       return total
     },
   },
