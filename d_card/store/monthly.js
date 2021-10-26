@@ -49,6 +49,10 @@ export const mutations = {
   update(state, payload) {
     state.spendingIncomeShop[0].splice(0, 1)
   },
+  delete(state, index) {
+    state.spendingIncomeShop.splice(index, 1)
+    state.shopsValue.splice(index, 1)
+  },
 }
 export const actions = {
   addMonthlyActions(context, payload) {
@@ -56,5 +60,8 @@ export const actions = {
   },
   updateAction(context, payload) {
     context.commit('update', payload)
+  },
+  deleteAction(context, payload) {
+    context.commit('delete', payload)
   },
 }
