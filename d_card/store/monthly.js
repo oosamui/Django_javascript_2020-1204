@@ -1,22 +1,23 @@
 export const state = () => ({
   spendingIncomeShop: [
     {
-      年月: '1999/01',
-      '西友　高針店': 121280,
-      ＢＳＢ西友高針: 4200,
-      ｈｏｎｔｏ: 11000,
-      コンビニ: 49660,
-      ﾈｯﾄﾌﾘｯｸｽ: 9900,
-      亜熱帯: 17800,
+      年月: '2021/07',
+      '西友　高針店': 1,
+      ＢＳＢ西友高針: 4,
+      ｈｏｎｔｏ: 11,
+      コンビニ: 4,
+      ﾈｯﾄﾌﾘｯｸｽ: 99,
+      亜熱帯: 17,
       丸善: 0,
       あかのれん: 0,
-      入金: 220000,
+      入金: 2233,
       その他: 0,
     },
   ],
   shopsText: [
     ['年月', '年月'],
     ['西友　高針店', '西友　高針店'],
+    ['SEIYU', 'Seiyu'],
     ['ＢＳＢ西友高針', 'ブックオフ西友高針'],
     ['ｈｏｎｔｏ', 'ｈｏｎｔｏ'],
     ['ﾈｯﾄﾌﾘｯｸｽ', 'ﾈｯﾄﾌﾘｯｸｽ'],
@@ -47,21 +48,26 @@ export const mutations = {
     state.spendingIncomeShop.push(payload)
   },
   update(state, payload) {
-    state.spendingIncomeShop[0].splice(0, 1)
+    state.spendingIncomeShop.splice(payload.i, 1, payload.shopObject)
   },
   delete(state, index) {
     state.spendingIncomeShop.splice(index, 1)
-    state.shopsValue.splice(index, 1)
+  },
+  AlreadyMonthAdd(state, monthAdd) {
+    state.AlreadyMonthObject.push(monthAdd)
   },
 }
 export const actions = {
   addMonthlyActions(context, payload) {
     context.commit('addMonthly', payload)
   },
-  updateAction(context, payload) {
+  updateMonthlyAction(context, payload) {
     context.commit('update', payload)
   },
   deleteAction(context, payload) {
     context.commit('delete', payload)
+  },
+  AlreadyMonthAddAction(context, monthNow) {
+    context.commit('AlreadyMonthAdd', monthNow)
   },
 }

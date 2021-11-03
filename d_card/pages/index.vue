@@ -21,7 +21,8 @@
         </div>
       </template>
     </v-app-bar>
-
+    <div><data-table></data-table></div>
+    <div><detail></detail></div>
     <v-footer color="primary" dark app> Vuetify </v-footer>
   </v-app>
 </template>

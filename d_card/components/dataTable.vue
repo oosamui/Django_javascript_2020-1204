@@ -1,11 +1,14 @@
 <template>
   <v-app>
+    
     <v-data-table
       :headers="headersComputed"
       :items="$store.state.monthly.spendingIncomeShop"
     >
+      <template #[`item.delete`]="{ item }">
+        <v-icon @click="deleteItem(item)"> mdi-delete </v-icon>
+      </template>
     </v-data-table>
-    {{ $store.state.monthly.spendingIncomeShop }}
   </v-app>
 </template>
 
@@ -14,7 +17,6 @@ export default {
   computed: {
     headersComputed() {
       const textData = this.$store.state.monthly.shopsText
-      console.log(textData)
       const headers = textData.map((shop) => {
         return { value: shop[0], text: shop[1] }
       })
@@ -23,8 +25,11 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      const index = this.items.indexOf(item)
-      confirm('ガチで削除しますか') && this.items.splice(index, 1)
+      const index = this.$store.state.monthly.spendingIncomeShop.indexOf(item)
+
+      if (confirm('ガチで削除しますか')) {
+        this.$store.dispatch('monthly/deleteAction', index)
+      }
     },
   },
 }

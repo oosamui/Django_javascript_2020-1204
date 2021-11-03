@@ -1,12 +1,6 @@
 <template>
   <v-app>
     <input type="file" @change="dcard_analysis" />
-    <div>支出{{ spending }}</div>
-    <div>店 {{ shopObject }}</div>
-    <div>Vuex {{ spendingconveniMonthly }}</div>
-    <div @click="add">
-      <v-btn color="deep-orange">aaa追加</v-btn>
-    </div>
   </v-app>
 </template>
 
@@ -689,6 +683,7 @@ export default {
         'セブン－イレブン',
         'デイリーヤマザキ',
         'フアミリ―マ―ト',
+        'ﾌｱﾐﾘ-ﾏ-ﾄ',
       ],
     }
   },
@@ -698,22 +693,14 @@ export default {
     },
   },
   methods: {
-    add() {
-      this.$store.dispatch('monthly/addMonthlyActions', 'aaa')
-    },
     shops() {
       const shopValueText = this.$store.state.monthly.shopsText
       const shopValue = shopValueText.map((s) => s[0])
       return shopValue
     },
-    vuex_save(monthNow) {
-      this.shopObject['年月'] = monthNow
-      this.$store.dispatch('monthly/addMonthlyActions', this.shopObject)
-    },
+
     dcard_analysis(e) {
       this.shops().map((s) => (this.shopObject[s] = 0))
-      console.log(this.shopObject)
-      let total = 0
       this.others = []
       this.spending = 0
       const vAll1 = [] // 支出入の全データ
@@ -745,7 +732,6 @@ export default {
           vAll1.push(vNow)
 
           // this.spendingIncome.forEach((val) => {
-          total += parseInt(vNow[4])
           // 入金の場合、収入に合計
           if (vNow[2].substr(0, 2) === '入金') {
             this.shopObject['入金'] += parseInt(vNow[4])
@@ -781,19 +767,28 @@ export default {
         }
         // vuexに保存
 
-        const AlreadyMonthObject = this.$store.state.monthly.spendingIncomeShop
-        const AlreadyMonthKeys = Object.keys(AlreadyMonthObject)
         const monthNow = vAll1[1][1].substr(0, 7)
+        this.shopObject['年月'] = monthNow
+        const SIS = this.$store.state.monthly.spendingIncomeShop
+        const indexMonth = SIS.findIndex((val) => val['年月'] === monthNow)
         // 過去に同じ年月で登録してる「かつ」上書き保存に同意
-        if (AlreadyMonthKeys.includes(monthNow)) {
-          if (confirm('既に同じ年月で保存されていますが、上書きしますか？')) {
-            this.vuex_save(monthNow)
-          }
-        } else {
-          this.vuex_save(monthNow) // 同じ年月の登録は「ない」
+        if (indexMonth === -1) {
+          this.$store.dispatch('monthly/addMonthlyActions', this.shopObject) // 同じ年月の登録は「ない」
+          this.shopObject = {}
+          this.$store.dispatch('detail/addDetailActions', {
+            date: monthNow,
+            detailMonth: vAll1,
+          }) // 同じ年月の登録は「ない」
+        } else if (
+          confirm('既に同じ年月で保存されていますが、上書きしますか？')
+        ) {
+          this.$store.dispatch('monthly/updateMonthlyAction', {
+            i: indexMonth,
+            shopObject: this.shopObject,
+          })
+          this.shopObject = {}
         }
       }
-      return total
     },
   },
 }
