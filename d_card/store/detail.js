@@ -1,11 +1,12 @@
+import Vue from 'vue'
 export const state = () => ({
-  det: [],
+  det: {},
   d: ['a', 'b', 'c'],
 })
 
 export const mutations = {
   addDetail(state, payload) {
-    state.det.push({ [payload.date]: payload.detailMonth })
+    Vue.set(state.det, payload.date, payload.detailMonth)
   },
 }
 
