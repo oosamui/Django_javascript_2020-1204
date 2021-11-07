@@ -17,17 +17,19 @@ export default {
   },
   computed: {
     detailComputed() {
-      const month = '2021/09'
+      // const month = '2021/09'
+      const month = this.$route.params.date
       const former = this.$store.state.detail.det // 受け取った年月の日別データ
       console.log(former)
 
-      const former2 = former[1][month] // 受け取った年月の日別データ
+      const former2 = former[month] // 受け取った年月の日別データ
       // const former = this.$store.state.detail.det[month] // 受け取った年月の日別データ
       console.log(former2)
-
-      const dateShopPrice = former2.map((val) => {
-        return { date: val[1], shopName: val[2], price: val[4] }
-      })
+      const dateShopPrice = !former2
+        ? [{ date: '-1', shopName: '西友', price: -11 }]
+        : former2.map((val) => {
+            return { date: val[1], shopName: val[2], price: val[4] }
+          })
       // return [{ date: '08/02', shopName: '西友', price: 100 }]
       return dateShopPrice
     },

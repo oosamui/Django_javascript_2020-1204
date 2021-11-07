@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    
     <v-data-table
       :headers="headersComputed"
       :items="$store.state.monthly.spendingIncomeShop"
     >
-      <template #[`item.delete`]="{ item }">
+      <template #[`item.action`]="{ item }">
         <v-icon @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon @click="detailItem(item)"> mdi-format-list-checkbox </v-icon>
       </template>
     </v-data-table>
   </v-app>
@@ -22,6 +22,9 @@ export default {
       })
       return headers
     },
+    selectRow(row) {
+      return null
+    },
   },
   methods: {
     deleteItem(item) {
@@ -30,6 +33,10 @@ export default {
       if (confirm('ガチで削除しますか')) {
         this.$store.dispatch('monthly/deleteAction', index)
       }
+    },
+    detailItem(item) {
+      console.log(item['年月'])
+      this.$router.push({ name: 'detail-date', params: { date: item['年月'] } })
     },
   },
 }
