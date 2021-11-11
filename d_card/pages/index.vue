@@ -20,6 +20,14 @@
       </div>
     </v-app-bar>
     <div><data-table></data-table></div>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d26096.53998389429!2d137.0062848!3d35.15493735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1636547112326!5m2!1sja!2sjp"
+      width="400"
+      height="300"
+      style="border: 0"
+      allowfullscreen=""
+      loading="lazy"
+    ></iframe>
     <v-footer color="primary" dark app> Vuetify </v-footer>
   </v-app>
 </template>
