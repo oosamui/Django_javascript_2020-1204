@@ -1,15 +1,14 @@
 <template>
   <div>
+    <!-- イザナギブログ -->
+    <!-- https://izanagiblog.com/archives/659 -->
     <no-ssr>
       <!-- 気仙沼大島の緯度・経度 -->
       <l-map :zoom="zoom" :center="center" style="height: 600px">
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker
-          v-for="(marker, k) of markerData"
-          :key="k"
-          :lat-lng="marker"
-          }
-        ></l-marker>
+        <l-marker v-for="(marker, k) of markerData" :key="k" :lat-lng="marker">
+          <l-tooltip :content="k"></l-tooltip>
+        </l-marker>
       </l-map>
     </no-ssr>
   </div>
